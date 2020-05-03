@@ -24,7 +24,8 @@ var argMap = map[string]func(map[string]interface{}) string{
 }
 
 func main() {
-	usage := `Usage:
+	usage := `faker-cli
+Usage:
 	faker address
 	faker adult [--max-age=<years>] (age|dob [-Y|-M|-D|--fmt=<fmt>])
 	faker city
@@ -37,9 +38,14 @@ func main() {
 	faker sex [--short]
 	faker state
 	faker street
-	`
+
+Options:
+  -h --help         Show this screen.
+  --version         Show version.
+  --short           Return shortform of relevant data.
+  --max-age=<years> Upper age limit for fake adult generation [default: 69].
+  --fmt=<fmt>       Timestamp formatter, uses the magical reference date of "Mon Jan 2 15:04:05 MST 2006"/"2006-01-02"`
 	arguments, _ := docopt.ParseDoc(usage)
-	fmt.Println(arguments)
 
 	for arg, handler := range argMap {
 		if arguments[arg].(bool) {
