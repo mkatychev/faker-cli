@@ -1,11 +1,13 @@
 package handler
 
-import "syreclabs.com/go/faker"
-import "strconv"
-import "fmt"
-import "github.com/docopt/docopt-go"
-import "math/rand"
-import "time"
+import (
+	"fmt"
+	"math/rand"
+	"strconv"
+	"time"
+
+	"syreclabs.com/go/faker"
+)
 
 // HandleName handles the boolean map if `faker name` is called
 func HandleName(opts map[string]interface{}) string {
@@ -18,6 +20,7 @@ func HandleName(opts map[string]interface{}) string {
 	return faker.Name().String()
 }
 
+// HandlePhone handles the boolean map if `faker phone` is called
 func HandlePhone(opts map[string]interface{}) string {
 	return faker.PhoneNumber().String()
 }
@@ -78,7 +81,7 @@ func HandleSex(opts map[string]interface{}) string {
 	return sex
 }
 
-// HandleAddress handles `faker adult []`
+// HandleAdult handles `faker adult []` arguments
 // TODO Pass in country codes for legal adult age
 // current assumption is an adult age is 18 years or older
 func HandleAdult(opts map[string]interface{}) string {
@@ -123,7 +126,8 @@ func HandleEmail(opts map[string]interface{}) string {
 	return faker.Internet().Email()
 }
 
-// HandleEmail handles `faker password`
+// HandlePassword handles `faker password` generation, allows a max and min length
+// default is 8-24
 func HandlePassword(opts map[string]interface{}) string {
 	var ok bool
 	min, max := 8, 24

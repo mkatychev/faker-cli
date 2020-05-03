@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
-import "github.com/mkatychev/faker-cli"
+import (
+	"fmt"
+
+	"github.com/docopt/docopt-go"
+	handler "github.com/mkatychev/faker-cli"
+)
 
 var argMap = map[string]func(map[string]interface{}) string{
 	"address":     handler.HandleAddress,
@@ -38,7 +42,7 @@ func main() {
 	fmt.Println(arguments)
 
 	for arg, handler := range argMap {
-		if arguments[arg].(bool) == true {
+		if arguments[arg].(bool) {
 			fmt.Println(handler(arguments))
 		}
 	}
