@@ -24,8 +24,7 @@ var argMap = map[string]func(map[string]interface{}) string{
 }
 
 func main() {
-	usage := `faker-cli
-Usage:
+	usage := `Usage:
 	faker address
 	faker adult [--max-age=<years>] (age|dob [-Y|-M|-D|--fmt=<fmt>])
 	faker city
