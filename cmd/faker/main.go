@@ -20,6 +20,7 @@ var argMap = map[string]func(map[string]interface{}) string{
 	"sex":         handler.HandleSex,
 	"state":       handler.HandleAddress,
 	"street":      handler.HandleAddress,
+	"street2":     handler.HandleAddress,
 	"zip":         handler.HandleAddress,
 }
 
@@ -37,6 +38,7 @@ func main() {
 	faker sex [--short]
 	faker state [--short]
 	faker street
+	faker street2
 
 Options:
   -h --help         Show this screen.

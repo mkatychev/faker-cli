@@ -61,6 +61,9 @@ func HandleAddress(opts map[string]interface{}) string {
 	if opts["street"].(bool) {
 		return faker.Address().StreetAddress()
 	}
+	if opts["street2"].(bool) {
+		return faker.Address().SecondaryAddress()
+	}
 	if opts["postal-code"].(bool) || opts["zip"].(bool) {
 		if opts["--state"] != nil {
 			faker.Address().PostcodeByState(opts["--state"].(string))
