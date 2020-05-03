@@ -1,22 +1,22 @@
 package main
 
 import "fmt"
-import "github.com/mkatychev/farker-cli"
+import "github.com/mkatychev/faker-cli"
 
 var argMap = map[string]func(map[string]interface{}) string{
-	"address":     faker_cli.HandleAddress,
-	"adult":       faker_cli.HandleAdult,
-	"city":        faker_cli.HandleAddress,
-	"country":     faker_cli.HandleAddress,
-	"email":       faker_cli.HandleEmail,
-	"name":        faker_cli.HandleName,
-	"password":    faker_cli.HandlePassword,
-	"phone":       faker_cli.HandlePhone,
-	"postal-code": faker_cli.HandleAddress,
-	"sex":         faker_cli.HandleSex,
-	"state":       faker_cli.HandleAddress,
-	"street":      faker_cli.HandleAddress,
-	"zip":         faker_cli.HandleAddress,
+	"address":     handler.HandleAddress,
+	"adult":       handler.HandleAdult,
+	"city":        handler.HandleAddress,
+	"country":     handler.HandleAddress,
+	"email":       handler.HandleEmail,
+	"name":        handler.HandleName,
+	"password":    handler.HandlePassword,
+	"phone":       handler.HandlePhone,
+	"postal-code": handler.HandleAddress,
+	"sex":         handler.HandleSex,
+	"state":       handler.HandleAddress,
+	"street":      handler.HandleAddress,
+	"zip":         handler.HandleAddress,
 }
 
 func main() {
