@@ -2,7 +2,7 @@
 [![GoDoc](https://godoc.org/github.com/go-jira/jira?status.svg)](https://godoc.org/github.com/go-jira/jira)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-# go-jira
+# faker-cli
 
 Simple command line client for [the wonderful faker pacakge](https://godoc.org/syreclabs.com/go/faker#pkg-constants) allowing one to quickly mock random user data
 
@@ -38,4 +38,3 @@ Options:
 ```
 
 * see https://golang.org/pkg/time/#Time.Format for help with timestamp formatting
-
