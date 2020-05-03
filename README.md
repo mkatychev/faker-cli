@@ -14,6 +14,7 @@ You can build and install the official repository with [Go](https://golang.org/d
 
 ## Usage
 
+```
 Usage:
 	faker address
 	faker adult [--max-age=<years>] (age|dob [-Y|-M|-D|--fmt=<fmt>])
