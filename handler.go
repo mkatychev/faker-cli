@@ -1,4 +1,4 @@
-package faker-cli
+package handler
 
 import "syreclabs.com/go/faker"
 import "strconv"
