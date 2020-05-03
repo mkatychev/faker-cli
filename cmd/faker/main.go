@@ -33,9 +33,9 @@ func main() {
 	faker name [first|last]
 	faker password [<min> <max>]
 	faker phone
-	faker (postal-code|zip)
+	faker (postal-code|zip) [--state=<state>]
 	faker sex [--short]
-	faker state
+	faker state [--short]
 	faker street
 
 Options:

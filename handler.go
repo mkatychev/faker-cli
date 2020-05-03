@@ -53,12 +53,18 @@ func HandleAddress(opts map[string]interface{}) string {
 		return faker.Address().City()
 	}
 	if opts["state"].(bool) {
+		if shortMode(opts) {
+			return faker.Address().StateAbbr()
+		}
 		return faker.Address().State()
 	}
 	if opts["street"].(bool) {
 		return faker.Address().StreetAddress()
 	}
 	if opts["postal-code"].(bool) || opts["zip"].(bool) {
+		if opts["--state"] != nil {
+			faker.Address().PostcodeByState(opts["--state"].(string))
+		}
 		return faker.Address().Postcode()
 	}
 	return faker.Address().String()
