@@ -8,7 +8,7 @@ Simple command line client for [the wonderful faker pacakge](https://godoc.org/s
 
 You can build and install the official repository with [Go](https://golang.org/dl/):
 
-	go get github.com/mkatychev/faker-cli/cmd/faker
+	go get github.com/mkatychev/faker-cli/cmd/gofaker
 
 ## Usage
 
