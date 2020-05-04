@@ -26,19 +26,19 @@ var argMap = map[string]func(map[string]interface{}) string{
 
 func main() {
 	usage := `Usage:
-	faker address
-	faker adult [--max-age=<years>] (age|dob [-Y|-M|-D|--fmt=<fmt>])
-	faker city
-	faker country [--short]
-	faker email
-	faker name [first|last]
-	faker password [<min> <max>]
-	faker phone
-	faker (postal-code|zip) [--state=<state>]
-	faker sex [--short]
-	faker state [--short]
-	faker street
-	faker street2
+	gofaker address
+	gofaker adult [--max-age=<years>] (age|dob [-Y|-M|-D|--fmt=<fmt>])
+	gofaker city
+	gofaker country [--short]
+	gofaker email
+	gofaker name [first|last]
+	gofaker password [<min> <max>]
+	gofaker phone
+	gofaker (postal-code|zip) [--state=<state>]
+	gofaker sex [--short]
+	gofaker state [--short]
+	gofaker street
+	gofaker street2
 
 Options:
   -h --help         Show this screen.
