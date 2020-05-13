@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/docopt/docopt-go"
 	handler "github.com/mkatychev/faker-cli"
@@ -47,7 +48,7 @@ Options:
   --max-age=<years> Upper age limit for fake adult generation [default: 69].
   --fmt=<fmt>       Timestamp formatter, uses the magical reference date of:
                     "Mon Jan 2 15:04:05 MST 2006"/"2006-01-02".`
-	arguments, _ := docopt.ParseDoc(usage)
+	arguments, _ := docopt.ParseArgs(usage, os.Args[1:], "0.1")
 
 	for arg, handler := range argMap {
 		if arguments[arg].(bool) {
