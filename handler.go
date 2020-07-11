@@ -1,4 +1,4 @@
-package handler
+package gofaker
 
 import (
 	"fmt"
@@ -8,6 +8,12 @@ import (
 
 	"syreclabs.com/go/faker"
 )
+
+// Not is used to blacklist specific string values
+var Not map[string]bool
+
+// Short returns shortform of relevant data.
+var Short bool
 
 // HandleName handles the boolean map if `faker name` is called
 func HandleName(opts map[string]interface{}) string {
@@ -25,10 +31,6 @@ func HandlePhone(opts map[string]interface{}) string {
 	return faker.PhoneNumber().String()
 }
 
-func shortMode(opts map[string]interface{}) bool {
-	return opts["--short"].(bool)
-}
-
 func getInt(from interface{}) (int, bool) {
 	str, ok := from.(string)
 	if !ok {
@@ -43,8 +45,9 @@ func getInt(from interface{}) (int, bool) {
 
 // HandleAddress handles `faker (city|state|zip-code|country)`
 func HandleAddress(opts map[string]interface{}) string {
+	var keyName string
 	if opts["country"].(bool) {
-		if shortMode(opts) {
+		if Short {
 			return faker.Address().CountryCode()
 		}
 		return faker.Address().Country()
@@ -53,10 +56,18 @@ func HandleAddress(opts map[string]interface{}) string {
 		return faker.Address().City()
 	}
 	if opts["state"].(bool) {
-		if shortMode(opts) {
-			return faker.Address().StateAbbr()
+		stateFn := faker.Address().State
+		keyName = "state"
+		if Short {
+			keyName = "state_abbr"
+			stateFn = faker.Address().StateAbbr
 		}
-		return faker.Address().State()
+		if Not != nil {
+			// https://stackoverflow.com/questions/15518919/take-address-of-value-inside-an-interface
+			faker.Locale["address"].(map[string]interface{})[keyName] = Exclude(
+				faker.Locale["address"].(map[string]interface{})[keyName].([]string), Not)
+		}
+		return stateFn()
 	}
 	if opts["street"].(bool) {
 		return faker.Address().StreetAddress()
@@ -84,7 +95,7 @@ func HandleSex(opts map[string]interface{}) string {
 	rand.Seed(time.Now().UnixNano())
 	// binary gender easier to implement for now
 	sex := sexMap[rand.Int()%2 == 0]
-	if shortMode(opts) {
+	if Short {
 		return string(sex[0])
 	}
 	return sex
