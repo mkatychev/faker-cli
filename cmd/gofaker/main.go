@@ -30,7 +30,7 @@ var argMap = map[string]func(map[string]interface{}) string{
 func main() {
 	usage := `Usage:
 	gofaker address
-	gofaker adult [--max-age=<years>] (age|dob [-Y|-M|-D|--fmt=<fmt>])
+	gofaker adult [--min=<years>] [--max=<years>] (age|dob [-Y|-M|-D|--fmt=<fmt>])
 	gofaker city
 	gofaker country [--short]
 	gofaker email
@@ -48,11 +48,12 @@ Options:
   -h --help                    Show this screen.
   --version                    Show version.
   --short                      Return shortform of relevant data.
-  --max-age=<years>            Upper age limit for fake adult generation [default: 69].
+  --min=<years>                Lower age limit for fake adult generation [default: 18].
+  --max=<years>                Upper age limit for fake adult generation [default: 69].
   --fmt=<fmt>                  Timestamp formatter, uses the magical reference date of:
                                "Mon Jan 2 15:04:05 MST 2006"/"2006-01-02".
   --not <val,>, -n <val,>      Blacklist specific string values, comma separated.
-  --now                        Creates an SSN from the first 9 characters of the current timestamp`
+  --now                        Creates an SSN from the first 9 characters of the current timestamp.`
 	arguments, _ := docopt.ParseArgs(usage, os.Args[1:], "0.2.1")
 
 	// convert --not into a string slice using commas as separators

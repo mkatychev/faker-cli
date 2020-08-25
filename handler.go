@@ -138,22 +138,27 @@ func HandleSex(opts map[string]interface{}) string {
 // TODO Pass in country codes for legal adult age
 // current assumption is an adult age is 18 years or older
 func HandleAdult(opts map[string]interface{}) string {
-
+	var ok bool
+	var min, max int
 	// see this for formatting details:
 	// https://golang.org/pkg/time/#Time.Format
 	dateFormat := "2006-01-02"
-	maxAge := 69
-	if opts["--fmt"] != nil {
-		dateFormat = opts["--fmt"].(string)
+	if opts["--min"] != nil {
+		min, ok = getInt(opts["--min"])
+		if !ok {
+			panic("<min> must be an integer")
+		}
 	}
-	if opts["--max-age"] != nil {
-		argAge, ok := getInt(opts["--max-age"])
+	if opts["--max"] != nil {
+		max, ok = getInt(opts["--max"])
 		if !ok {
 			panic("<max> must be an integer")
 		}
-		maxAge = argAge
 	}
-	dob := faker.Date().Birthday(18, maxAge)
+	if opts["--fmt"] != nil {
+		dateFormat = opts["--fmt"].(string)
+	}
+	dob := faker.Date().Birthday(min, max)
 
 	if opts["age"].(bool) {
 		return fmt.Sprintf("%d", time.Now().Year()-dob.Year())
