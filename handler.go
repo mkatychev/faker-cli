@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"syreclabs.com/go/faker"
+	"syreclabs.com/go/faker/locales"
 )
 
 // Not is used to blacklist specific string values
@@ -47,6 +48,16 @@ func HandleSSN(opts map[string]interface{}) string {
 
 // HandlePhone handles the boolean map if `faker phone` is called
 func HandlePhone(opts map[string]interface{}) string {
+	if Short {
+		faker.Locale = locales.En_US
+		number := faker.PhoneNumber()
+		return fmt.Sprintf(
+			"%s-%s-%s",
+			number.AreaCode(),
+			number.ExchangeCode(),
+			number.SubscriberNumber(4),
+		)
+	}
 	return faker.PhoneNumber().String()
 }
 

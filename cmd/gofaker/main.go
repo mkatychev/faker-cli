@@ -36,7 +36,7 @@ func main() {
 	gofaker email
 	gofaker name [first|last]
 	gofaker password [<min> <max>]
-	gofaker phone
+	gofaker phone [--short]
 	gofaker (postal-code|zip) [--state=<state>]
 	gofaker sex [--short] [--lower]
 	gofaker state [--short] [-n <val,>]
@@ -53,7 +53,7 @@ Options:
                                "Mon Jan 2 15:04:05 MST 2006"/"2006-01-02".
   --not <val,>, -n <val,>      Blacklist specific string values, comma separated.
   --now                        Creates an SSN from the first 9 characters of the current timestamp`
-	arguments, _ := docopt.ParseArgs(usage, os.Args[1:], "0.2.0")
+	arguments, _ := docopt.ParseArgs(usage, os.Args[1:], "0.2.1")
 
 	// convert --not into a string slice using commas as separators
 	if arguments["--not"] != nil {
