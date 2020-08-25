@@ -23,10 +23,11 @@ Usage:
 	gofaker password [<min> <max>]
 	gofaker phone
 	gofaker (postal-code|zip) [--state=<state>]
-	gofaker sex [--short]
+	gofaker sex [--short] [--lower]
 	gofaker state [--short] [-n <val,>]
 	gofaker street
 	gofaker street2
+	gofaker ssn [--short] [--now]
 
 Options:
   -h --help                    Show this screen.
@@ -36,6 +37,7 @@ Options:
   --fmt=<fmt>                  Timestamp formatter, uses the magical reference date of:
                                "Mon Jan 2 15:04:05 MST 2006"/"2006-01-02".
   --not <val,>, -n <val,>      Blacklist specific string values, comma separated.
+  --now                        Creates an SSN from the first 9 characters of the current timestamp
 ```
 
 * see https://golang.org/pkg/time/#Time.Format for help with timestamp formatting

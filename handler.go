@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"strconv"
+	"strings"
 	"time"
 
 	"syreclabs.com/go/faker"
@@ -15,6 +16,9 @@ var Not map[string]bool
 // Short returns shortform of relevant data.
 var Short bool
 
+// Lower returns the lowercased form of relevant data.
+var Lower bool
+
 // HandleName handles the boolean map if `faker name` is called
 func HandleName(opts map[string]interface{}) string {
 	if opts["first"].(bool) {
@@ -24,6 +28,21 @@ func HandleName(opts map[string]interface{}) string {
 		return faker.Name().LastName()
 	}
 	return faker.Name().String()
+}
+
+// HandleSSN handles the boolean map if `faker ssn` is called
+func HandleSSN(opts map[string]interface{}) string {
+	var ssn string
+	if opts["--now"].(bool) {
+		ssn = strconv.Itoa(int(time.Now().Unix()))[:9]
+	} else {
+		ssn = strconv.Itoa(faker.RandomInt(111111111, 999999999))[:9]
+	}
+	if !Short {
+		return fmt.Sprintf("%s-%s-%s", ssn[:3], ssn[3:5], ssn[5:])
+	}
+
+	return ssn
 }
 
 // HandlePhone handles the boolean map if `faker phone` is called
@@ -96,7 +115,10 @@ func HandleSex(opts map[string]interface{}) string {
 	// binary gender easier to implement for now
 	sex := sexMap[rand.Int()%2 == 0]
 	if Short {
-		return string(sex[0])
+		sex = string(sex[0])
+	}
+	if Lower {
+		sex = strings.ToLower(sex)
 	}
 	return sex
 }
