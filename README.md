@@ -19,6 +19,7 @@ Usage:
 	gofaker city
 	gofaker country [--short]
 	gofaker email
+	gofaker guid
 	gofaker name [first|last]
 	gofaker password [<min> <max>]
 	gofaker phone [--short]
