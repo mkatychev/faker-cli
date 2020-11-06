@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	"syreclabs.com/go/faker"
 	"syreclabs.com/go/faker/locales"
 )
@@ -202,4 +203,9 @@ func HandlePassword(opts map[string]interface{}) string {
 		}
 	}
 	return faker.Internet().Password(min, max)
+}
+
+// HandleGuid handles `faker guid`
+func HandleGuid(opts map[string]interface{}) string {
+	return uuid.New().String()
 }

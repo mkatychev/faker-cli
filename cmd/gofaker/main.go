@@ -15,6 +15,7 @@ var argMap = map[string]func(map[string]interface{}) string{
 	"city":        gofaker.HandleAddress,
 	"country":     gofaker.HandleAddress,
 	"email":       gofaker.HandleEmail,
+	"guid":        gofaker.HandleGuid,
 	"name":        gofaker.HandleName,
 	"password":    gofaker.HandlePassword,
 	"phone":       gofaker.HandlePhone,
@@ -34,6 +35,7 @@ func main() {
 	gofaker city
 	gofaker country [--short]
 	gofaker email
+	gofaker guid
 	gofaker name [first|last]
 	gofaker password [<min> <max>]
 	gofaker phone [--short]
