@@ -17,6 +17,7 @@ var argMap = map[string]func(map[string]interface{}) string{
 	"email":       gofaker.HandleEmail,
 	"guid":        gofaker.HandleGuid,
 	"name":        gofaker.HandleName,
+	"now":        gofaker.HandleNow,
 	"password":    gofaker.HandlePassword,
 	"phone":       gofaker.HandlePhone,
 	"postal-code": gofaker.HandleAddress,
@@ -28,8 +29,16 @@ var argMap = map[string]func(map[string]interface{}) string{
 	"zip":         gofaker.HandleAddress,
 }
 
+func ifErr(err error) {
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
 func main() {
-	usage := `Usage:
+	usage := `
+Usage:
 	gofaker address
 	gofaker adult [--min=<years>] [--max=<years>] (age|dob [-Y|-M|-D|--fmt=<fmt>])
 	gofaker city
@@ -37,6 +46,7 @@ func main() {
 	gofaker email
 	gofaker guid
 	gofaker name [first|last]
+	gofaker now [--fmt=<fmt>]
 	gofaker password [<min> <max>]
 	gofaker phone [--short]
 	gofaker (postal-code|zip) [--state=<state>]
@@ -53,23 +63,26 @@ Options:
   --min=<years>                Lower age limit for fake adult generation [default: 18].
   --max=<years>                Upper age limit for fake adult generation [default: 69].
   --fmt=<fmt>                  Timestamp formatter, uses the magical reference date of:
-                               "Mon Jan 2 15:04:05 MST 2006"/"2006-01-02".
+                               "Mon Jan 2 15:04:05 MST 2006"/"2006-01-02" [default: 2006-01-02].
   --not <val,>, -n <val,>      Blacklist specific string values, comma separated.
-  --now                        Creates an SSN from the first 9 characters of the current timestamp.`
-	arguments, _ := docopt.ParseArgs(usage, os.Args[1:], "0.3.0")
+  --now                        Creates an SSN from the first 9 characters of the current timestamp.
+`
+	opts, err := docopt.ParseArgs(usage, os.Args[1:], "0.4.0")
+	ifErr(err)
 
 	// convert --not into a string slice using commas as separators
-	if arguments["--not"] != nil {
+	if opts["--not"] != nil {
 		gofaker.Not = make(map[string]bool)
-		for _, v := range strings.Split(arguments["--not"].(string), ",") {
+		for _, v := range strings.Split(opts["--not"].(string), ",") {
 			gofaker.Not[v] = true
 		}
 	}
-	gofaker.Short = arguments["--short"].(bool)
-	gofaker.Lower = arguments["--lower"].(bool)
+	gofaker.DateFormat = opts["--fmt"].(string)
+	gofaker.Short = opts["--short"].(bool)
+	gofaker.Lower = opts["--lower"].(bool)
 	for arg, handler := range argMap {
-		if arguments[arg].(bool) {
-			fmt.Println(handler(arguments))
+		if opts[arg].(bool) {
+			fmt.Fprintln(os.Stdout, handler(opts))
 		}
 	}
 

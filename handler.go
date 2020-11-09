@@ -21,7 +21,10 @@ var Short bool
 // Lower returns the lowercased form of relevant data.
 var Lower bool
 
-// HandleName handles the boolean map if `faker name` is called
+// DateFormater is used to format time outputs
+var DateFormat = "2006-01-02"
+
+// HandleName handles the boolean map if `gofaker name` is called
 func HandleName(opts map[string]interface{}) string {
 	if opts["first"].(bool) {
 		return faker.Name().FirstName()
@@ -32,7 +35,7 @@ func HandleName(opts map[string]interface{}) string {
 	return faker.Name().String()
 }
 
-// HandleSSN handles the boolean map if `faker ssn` is called
+// HandleSSN handles the boolean map if `gofaker ssn` is called
 func HandleSSN(opts map[string]interface{}) string {
 	var ssn string
 	if opts["--now"].(bool) {
@@ -47,7 +50,7 @@ func HandleSSN(opts map[string]interface{}) string {
 	return ssn
 }
 
-// HandlePhone handles the boolean map if `faker phone` is called
+// HandlePhone handles the boolean map if `gofaker phone` is called
 func HandlePhone(opts map[string]interface{}) string {
 	if Short {
 		faker.Locale = locales.En_US
@@ -74,7 +77,7 @@ func getInt(from interface{}) (int, bool) {
 	return int(val), true
 }
 
-// HandleAddress handles `faker (city|state|zip-code|country)`
+// HandleAddress handles `gofaker (city|state|zip-code|country)`
 func HandleAddress(opts map[string]interface{}) string {
 	var keyName string
 	if opts["country"].(bool) {
@@ -115,7 +118,7 @@ func HandleAddress(opts map[string]interface{}) string {
 	return faker.Address().String()
 }
 
-// HandleSex handles `faker sex [--short]`
+// HandleSex handles `gofaker sex [--short]`
 func HandleSex(opts map[string]interface{}) string {
 	sexMap := map[bool]string{
 		true:  "FEMALE",
@@ -135,7 +138,7 @@ func HandleSex(opts map[string]interface{}) string {
 	return sex
 }
 
-// HandleAdult handles `faker adult []` arguments
+// HandleAdult handles `gofaker adult []` arguments
 // TODO Pass in country codes for legal adult age
 // current assumption is an adult age is 18 years or older
 func HandleAdult(opts map[string]interface{}) string {
@@ -143,7 +146,6 @@ func HandleAdult(opts map[string]interface{}) string {
 	var min, max int
 	// see this for formatting details:
 	// https://golang.org/pkg/time/#Time.Format
-	dateFormat := "2006-01-02"
 	if opts["--min"] != nil {
 		min, ok = getInt(opts["--min"])
 		if !ok {
@@ -155,9 +157,6 @@ func HandleAdult(opts map[string]interface{}) string {
 		if !ok {
 			panic("<max> must be an integer")
 		}
-	}
-	if opts["--fmt"] != nil {
-		dateFormat = opts["--fmt"].(string)
 	}
 	dob := faker.Date().Birthday(min, max)
 
@@ -175,17 +174,17 @@ func HandleAdult(opts map[string]interface{}) string {
 			return fmt.Sprintf("%d", dob.Day())
 		}
 
-		return dob.Format(dateFormat)
+		return dob.Format(DateFormat)
 	}
 	return "<nil>"
 }
 
-// HandleEmail handles `faker email`
+// HandleEmail handles `gofaker email`
 func HandleEmail(opts map[string]interface{}) string {
 	return faker.Internet().Email()
 }
 
-// HandlePassword handles `faker password` generation, allows a max and min length
+// HandlePassword handles `gofaker password` generation, allows a max and min length
 // default is 8-24
 func HandlePassword(opts map[string]interface{}) string {
 	var ok bool
@@ -205,7 +204,12 @@ func HandlePassword(opts map[string]interface{}) string {
 	return faker.Internet().Password(min, max)
 }
 
-// HandleGuid handles `faker guid`
+// HandleGuid handles `gofaker guid`
 func HandleGuid(opts map[string]interface{}) string {
 	return uuid.New().String()
+}
+
+// HandleNow handles `gofaker now`
+func HandleNow(opts map[string]interface{}) string {
+	return time.Now().Format(DateFormat)
 }

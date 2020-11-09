@@ -21,6 +21,7 @@ Usage:
 	gofaker email
 	gofaker guid
 	gofaker name [first|last]
+	gofaker now [--fmt=<fmt>]
 	gofaker password [<min> <max>]
 	gofaker phone [--short]
 	gofaker (postal-code|zip) [--state=<state>]
@@ -37,7 +38,7 @@ Options:
   --min=<years>                Lower age limit for fake adult generation [default: 18].
   --max=<years>                Upper age limit for fake adult generation [default: 69].
   --fmt=<fmt>                  Timestamp formatter, uses the magical reference date of:
-                               "Mon Jan 2 15:04:05 MST 2006"/"2006-01-02".
+                               "Mon Jan 2 15:04:05 MST 2006"/"2006-01-02" [default: 2006-01-02].
   --not <val,>, -n <val,>      Blacklist specific string values, comma separated.
   --now                        Creates an SSN from the first 9 characters of the current timestamp.
 ```
