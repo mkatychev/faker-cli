@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/lucasjones/reggen"
 	"syreclabs.com/go/faker"
 	"syreclabs.com/go/faker/locales"
 )
@@ -24,6 +25,16 @@ var Lower bool
 // DateFormater is used to format time outputs
 var DateFormat = "2006-01-02"
 
+// SSNRegex is used to implement pseudorandom RE generator that passes perl re while using re2 engine
+// valid perl regex (that is invalid re2 regex):
+// regex = "^(?!666|000|9\\d{2})\\d{3}-(?!00)\\d{2}-(?!0{4})\\d{4}$";
+// simple approach:
+// [^2069]xx
+// [^0]x
+// [^0]xxx
+// https://en.wikipedia.org/wiki/Social_Security_number#Valid_SSNs
+const SSNRegex = `[134578]\d\d[1-9]\d[1-9]\d\d\d`
+
 // HandleName handles the boolean map if `gofaker name` is called
 func HandleName(opts map[string]interface{}) string {
 	if opts["first"].(bool) {
@@ -36,12 +47,12 @@ func HandleName(opts map[string]interface{}) string {
 }
 
 // HandleSSN handles the boolean map if `gofaker ssn` is called
-func HandleSSN(opts map[string]interface{}) string {
-	var ssn string
+func HandleSSN(opts map[string]interface{}) (ssn string) {
+	var err error
 	if opts["--now"].(bool) {
 		ssn = strconv.Itoa(int(time.Now().Unix()))[:9]
-	} else {
-		ssn = strconv.Itoa(faker.RandomInt(111111111, 999999999))[:9]
+	} else if ssn, err = reggen.Generate(SSNRegex, 10); err != nil {
+		panic(err)
 	}
 	if !Short {
 		return fmt.Sprintf("%s-%s-%s", ssn[:3], ssn[3:5], ssn[5:])

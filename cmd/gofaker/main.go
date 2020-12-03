@@ -17,7 +17,7 @@ var argMap = map[string]func(map[string]interface{}) string{
 	"email":       gofaker.HandleEmail,
 	"guid":        gofaker.HandleGuid,
 	"name":        gofaker.HandleName,
-	"now":        gofaker.HandleNow,
+	"now":         gofaker.HandleNow,
 	"password":    gofaker.HandlePassword,
 	"phone":       gofaker.HandlePhone,
 	"postal-code": gofaker.HandleAddress,
@@ -29,15 +29,8 @@ var argMap = map[string]func(map[string]interface{}) string{
 	"zip":         gofaker.HandleAddress,
 }
 
-func ifErr(err error) {
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-}
-
-func main() {
-	usage := `
+const gofakerVersion = "0.4.1"
+const usage string = `
 Usage:
 	gofaker address
 	gofaker adult [--min=<years>] [--max=<years>] (age|dob [-Y|-M|-D|--fmt=<fmt>])
@@ -67,7 +60,16 @@ Options:
   --not <val,>, -n <val,>      Blacklist specific string values, comma separated.
   --now                        Creates an SSN from the first 9 characters of the current timestamp.
 `
-	opts, err := docopt.ParseArgs(usage, os.Args[1:], "0.4.0")
+
+func ifErr(err error) {
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func main() {
+	opts, err := docopt.ParseArgs(usage, os.Args[1:], gofakerVersion)
 	ifErr(err)
 
 	// convert --not into a string slice using commas as separators
