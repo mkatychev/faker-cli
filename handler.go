@@ -124,7 +124,11 @@ func HandleAddress(opts map[string]interface{}) string {
 		if opts["--state"] != nil {
 			faker.Address().PostcodeByState(opts["--state"].(string))
 		}
-		return faker.Address().Postcode()
+		zip := faker.Address().Postcode()
+		if Short {
+			zip = zip[:5]
+		}
+		return zip
 	}
 	return faker.Address().String()
 }
