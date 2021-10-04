@@ -19,12 +19,12 @@ Usage:
 	gofaker city
 	gofaker country [--short]
 	gofaker email
-	gofaker guid
+	gofaker (guid|uuid)
 	gofaker name [first|last]
 	gofaker now [--fmt=<fmt>]
 	gofaker password [<min> <max>]
 	gofaker phone [--short]
-	gofaker (postal-code|zip) [--state=<state>]
+	gofaker (postal-code|zip) [--short] [--state=<state>]
 	gofaker sex [--short] [--lower]
 	gofaker state [--short] [-n <val,>]
 	gofaker street

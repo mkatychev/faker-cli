@@ -22,7 +22,7 @@ var Short bool
 // Lower returns the lowercased form of relevant data.
 var Lower bool
 
-// DateFormater is used to format time outputs
+// DateFormat is used to format time outputs
 var DateFormat = "2006-01-02"
 
 // SSNRegex is used to implement pseudorandom RE generator that passes perl re while using re2 engine
@@ -219,8 +219,8 @@ func HandlePassword(opts map[string]interface{}) string {
 	return faker.Internet().Password(min, max)
 }
 
-// HandleGuid handles `gofaker guid`
-func HandleGuid(opts map[string]interface{}) string {
+// HandleGUID handles `gofaker (guid|uuid)`
+func HandleGUID(opts map[string]interface{}) string {
 	return uuid.New().String()
 }
 
