@@ -29,7 +29,7 @@ var argMap = map[string]func(map[string]interface{}) string{
 	"zip":         gofaker.HandleAddress,
 }
 
-const gofakerVersion = "0.4.1"
+const gofakerVersion = "0.5.0"
 const usage string = `
 Usage:
 	gofaker address
